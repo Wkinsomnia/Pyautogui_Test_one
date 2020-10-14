@@ -1,0 +1,302 @@
+import pyautogui as pgui
+import time
+import pyperclip
+import random
+import tkinter
+
+###...###
+
+def win_set(func):
+
+    win = tkinter.Tk() # 初始化界面Tk()
+    win.title("窗口标题")    # 设置窗口标题
+    #app.configure(bg="#00ff00")#修改窗体背景色
+    #app.iconbitmap("test.ico")#修改窗体图标
+    app.geometry("250x250+100+100")    # 设置窗口大小与左上锚点定位
+    app.resizable(width=False, height=False) # 设置窗口是否可以变化长/宽，False不可变，True可变，默认为True
+    frame=tkinter.Frame(win,width=200,height=200) 
+    frame.bind("f1",func) #触发的函数
+    frame.focus_set()  #必须获取焦点
+    frame.pack()
+    win.mainloop()
+
+###...###
+
+def ckytj_start(x):
+    pgui.PAUSE = 0.1
+    pgui.FAILSAFE = True           # 启用自动防故障功能
+    width,height = pgui.size()     # 屏幕的宽度和高度
+    pgui.position()                # 鼠标当前位置
+def pause_start(x):##时间设置
+    pgui.PAUSE = x
+
+def fist_set():
+    pgui.click(520,265)
+    pgui.press('enter')
+    pgui.click(490,265)
+    pgui.press('enter')
+    pgui.click(840,265)
+    pgui.press('enter')
+    pgui.click(805,265)
+    pgui.press('enter')
+    pause_start(0.2)
+    for i in range(3):
+        pgui.click(770,265)
+        pgui.press('enter')
+
+    
+    print('时间、地址加载完成')
+    
+def impc():
+    pgui.click(840,220)##打开串口
+    im = pgui.screenshot()     # 获取屏幕快照
+    im.getpixel((710,380))           # (240,240,240)
+    i=pgui.pixelMatchesColor(710,380,(240,240,240))
+    print(i)
+    if i==False:
+        print("信息已写")
+    elif i==True :
+        print("正常运行")
+    return i
+    pgui.click(840,220)##关闭串口
+
+def paste(foo):
+    pyperclip.copy(foo)
+    pgui.hotkey('ctrl', 'v')
+
+def xx_input(y,foo,c):
+    color=[605,615,620]
+    
+    pgui.click(447,y)##
+    pgui.click(850,515)##进入特效
+    pgui.click(850,545)##选择从右入特效
+    pgui.click(850,590)##字体颜色
+    pgui.click(850,color[c])##选择红色
+    pgui.click(828,660)##显示内容460
+    pgui.mouseDown(828,660, button='left')
+    pgui.mouseUp(460,660, button='left',duration=1)
+    paste(foo)
+def four_lines(j=4,c=0):##j: 选择输入 2 h \4 h  c:选择双行色 0红 1 绿
+    
+    foo =[u'车牌识别',u'减速慢行',u'一车一杆',u'车损自负']
+    y=[340,374,407,440]
+
+    if c==0:
+        for i in range(j):
+            xx_input(y[i],foo[i],c)
+            print('单色第',i+1,'行信息填写完成',c)
+    elif c==1:
+        c=0
+        for i in range(j):
+        ##填写文本—foo =[u'车牌识别',u'减速慢行',u'一车一杆',u'车损自负']
+        ##y=[340,374,407,440]
+            c=0
+            i+=1
+            if i!=0|i%2==0 :
+                
+                c=1
+            
+            i-=1
+            xx_input(y[i],foo[i],c)
+            print('双色第',i+1,'行信息填写完成',c)
+            
+def p_initialization(j=6,c=0):##j=1时只进行屏幕测试
+    y=[670,633,596,559,522,485,448]
+    
+    for i in range(j):
+        ##初始化加载信息 
+        pgui.click(950,y[i])##加载37
+        if i==0 :
+            pause_start(2)
+            pgui.press('enter')
+            if c==1 :
+                pgui.press('enter')
+        pause_start(0.2)
+        pgui.press('enter')
+    print('初始化、加载信息完成')
+
+def pc_set(i,h=64):##屏参设置
+    ys=[388,400]
+    pgui.click(950,448)
+    if h==64 :
+        pgui.click(600,370)
+        pgui.click(560,415)
+    pgui.click(860,370)
+    pgui.click(860,ys[i])
+    pgui.click(900,420)
+    pgui.press('enter')
+    print('屏参设置完成')
+    pgui.click(1000,620)##返回
+def yy_test():##语音测试
+    
+    pgui.click(940,220)
+    pause_start(3)
+    for i in range(2):
+        y=random.randint(350,660)
+        print(y)
+        pgui.click(480,y,clicks=2)
+
+    pause_start(0.2)
+    pgui.click(940,220)
+    
+    print('语音测试完成')
+    
+def win_test(i): ### i为全能串口window位置
+    pause_start(0.2)
+    pgui.hotkey('winleft',i)
+    
+    print("'window','",i,"'切换完成")
+    
+def qn_jd_fist(): ## 全能串口测试
+    pause_start(0.1)
+    pgui.click(870,400)
+    pause_start(0.2)
+    for i in range(3):
+        pgui.click(530,650,clicks=i)
+        
+    pgui.click(870,400)
+    print('全能串口测试完成')
+
+def qt_set(h=64,i=0) :## h:屏高设置32  64 i:颜色设置 0--388--单色  1--420--双色
+    if h==32:
+        j=2
+    elif h==64:
+        j=4
+    ##h&j  j:选择输入 2 h ,4 h
+    ckytj_start(0.2)
+    print('h:',h,'i:',i,'j',j)
+    '''
+    pgui.doubleClick(255,40)
+    '''
+    pgui.click(840,220) ## 打开串口
+
+    impc() ## 调用impc()
+    pgui.click(1015,340) ## 64*32
+    if h==64:
+        pgui.click(1015,380)
+    else :
+        j=2
+    pgui.press('enter') ## 64*64
+
+    four_lines(j,i) ## 调用four_lines(）选择输入 2 h ,4 h
+
+    pause_start(0.3)
+   
+    ys=[388,400] ## 颜色设置 0--388--单色  1--420--双色
+    pc_set(i,h)
+    print('64串口测试设置完成')
+    pgui.click(840,220) ## 关闭串口
+def ck_test(i=0): ## 正常两行测试
+    ckytj_start(0.2)
+    
+    pgui.click(840,220) ## 打开串口
+
+
+    fist_set() ## 时间地址设置
+
+    p_initialization(6,i) ## 加载信息、初始化
+    
+    yy_test() ## 语音测试
+    pause_start(0.2)
+    pc_set(i,h=32)
+    pgui.click(840,220) ## 关闭串口
+    print('通用测试完成')
+
+def ck_test_1(i=0): ## 正常通用测试
+    ckytj_start(0.2)
+    
+    pgui.click(840,220) ## 打开串口
+
+    
+
+    fist_set() ## 时间地址设置
+
+    p_initialization(6,i)##加载信息、初始化
+    
+    yy_test()##语音测试
+    pause_start(0.2)
+    
+    pgui.click(840,220)##关闭串口
+    print('4行通用测试完成')
+
+def sspc_test():##双色屏幕测试
+    pgui.click(840,220)##打开串口
+    p_initialization(j=1)##j=1时只进行屏幕测试
+    pause_start(1)
+    pgui.press('enter')
+    pgui.press('enter')
+    pgui.press('enter')
+    
+    pgui.click(840,220)##关闭串口
+def ty_test(h=64,i=0):
+    ckytj_start(0.2)
+    win_test('4') ## 切换串口窗口
+    if impc():
+        qt_set(h,i)
+    ##通用测试；
+    """
+    环境：
+    1.打开comm.exe，打开串口版显示一体机调试工具
+    2.将comm.exe置(window,3)
+    3.点击串口版显示一体机调试工具
+    """
+    ck_test_1(i) ## 串口测试
+    '''
+    sspc_test()##双色屏幕测试aging
+    '''
+    win_test('3') ## 切换全能窗口
+    qn_jd_fist() ## 全能串口测试
+    
+    pgui.keyDown('altleft')
+    pgui.press('tab')
+    pgui.press('tab')
+    pgui.press('tab')
+    pgui.keyUp('altleft')
+
+##############......##############
+    ##########>>><<<############
+if __name__ == '__main__':
+    '''
+    ckytj_start(0.2)
+    j=(840,220)
+    pgui.click(j)
+    '''
+    h=64
+    i=0
+    ty_test(h,i)
+    ##pgui.click(1100,455)
+    
+    ##########>>><<<############
+##############......##############
+
+
+'''
+
+
+qt_set()##四行单色通用set
+
+qt_set(h=32,i=0)##两行单色通用set
+
+qt_set(h=32,i=1)##两行双色通用set
+
+ty_test()##单色通用测试
+
+ty_test(1)##双色通用测试
+
+
+'''
+
+'''
+###...屏幕测试...###
+ckytj_start(0.2)
+
+while True:
+    p_initialization(j=1)##j=1时只进行屏幕测试
+    pause_start(1)
+    pgui.press('enter')
+    pgui.press('enter')
+    pgui.press('enter')
+    pgui.press('enter')
+    pgui.press('enter')
+'''
+
