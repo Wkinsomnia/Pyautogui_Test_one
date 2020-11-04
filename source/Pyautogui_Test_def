@@ -11,12 +11,12 @@ def txt_str():
     str1= (str(f.read())).replace(' ','').replace('\n','').replace('\u3000','').replace(':','。').replace('：','。').replace('?','。').replace('？','。').replace('；','。').replace(';','。').replace('!','。').replace('！','。')    #将txt文件的所有内容读入到字符串str中
     f.close()   #将文件关闭
     return str1
+    
 def wnyy_test_foo():
     global foo_count
-    global str1
+    list1=txt_str().split('。')
     foo=list1[foo_count]
     foo_count+=1
-    list1=txt_str().split('。')
     if foo_count==len(list1):
         foo_count=0
     return foo
