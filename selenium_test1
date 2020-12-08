@@ -1,0 +1,51 @@
+from selenium import webdriver
+from time import sleep
+'''
+def f_read(l=u"url.txt"):
+    f = open(l)
+    line =f.readline()
+    while line:
+        line =f.readline()
+        print(line)
+        print(type(line))
+        return line
+    f.close()
+print(f_read(l=u"url.txt"))
+'''
+
+shu=input()
+url=u"http://192.168.1."+str(shu)
+user="admin"
+password="123456"
+driver = webdriver.Chrome()
+driver.maximize_window ()
+driver.get(url)
+sleep(0.5)
+driver.find_element_by_class_name("user").send_keys(user)
+driver.find_element_by_class_name("pass").send_keys(password)
+driver.find_element_by_class_name("login").click()
+sleep(1)
+driver.find_element_by_xpath("/html/body/div[1]/div[1]/div[2]/div[2]/h1").click()
+sleep(1)
+
+##all_handles=driver.window_handles
+##iframe=driver.find_element_by_tag_name("/html/body/div/div/div/div[21]")
+##<iframe src="view/discernSetting.html" frameborder="0"></iframe>
+
+driver.switch_to.frame(0)
+driver.find_element_by_id("Intervals").clear()
+driver.find_element_by_id("Intervals").send_keys("1")
+driver.find_element_by_id("DelayVal").clear()
+driver.find_element_by_id("DelayVal").send_keys("1")
+driver.find_element_by_xpath("/html/body/div/div/div/div[21]").click()
+sleep(1)
+driver.switch_to.alert.accept()
+driver.switch_to.default_content()
+##driver.switch_to.parent_frame()
+sleep(1)
+driver.find_element_by_xpath("/html/body/div[1]/div[1]/div[2]/div[11]/h1").click()
+sleep(1)
+driver.switch_to.default_content()
+s=input()
+sleep(1)
+driver.quit()
